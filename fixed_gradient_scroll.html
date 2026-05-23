@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gradient Scroll Animation</title>
+    <style>
+        @import url("https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;900&family=JetBrains+Mono:wght@400;500&display=swap");
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #0a0612;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        main { 
+            position: relative; 
+            z-index: 2; 
+        }
+
+        section {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 6vw;
+        }
+
+        .headline {
+            font-weight: 900;
+            font-size: clamp(72px, 16vw, 260px);
+            line-height: .9;
+            padding: 0.1em 0.05em;
+            letter-spacing: -0.05em;
+            text-align: center;
+            user-select: none;
+
+            --gy: 50vh;
+
+            background-image: radial-gradient(
+                in oklch circle at 50% var(--gy),
+                oklch(0.92 0.13 85)   0vh,
+                oklch(0.72 0.27 18)   50vh,
+                oklch(0.42 0.18 320)  90vh,
+                oklch(0.18 0.06 280 / 0) 150vh
+            );
+            background-clip: text;
+            color: transparent;
+
+            filter: drop-shadow(0 0 30px oklch(0.7 0.25 20 / 0.15));
+        }
+
+        section:nth-child(2) .headline {
+            background-image: radial-gradient(
+                in oklch circle at 50% var(--gy),
+                oklch(0.95 0.12 200)  0vh,
+                oklch(0.75 0.25 220)  50vh,
+                oklch(0.40 0.20 280)  90vh,
+                oklch(0.15 0.08 260 / 0) 150vh
+            );
+        }
+
+        section:nth-child(3) .headline {
+            background-image: radial-gradient(
+                in oklch circle at 50% var(--gy),
+                oklch(0.94 0.16 110)  0vh,
+                oklch(0.78 0.24 60)   50vh,
+                oklch(0.45 0.22 25)   90vh,
+                oklch(0.18 0.08 350 / 0) 150vh
+            );
+        }
+
+        section:nth-child(4) .headline {
+            background-image: radial-gradient(
+                in oklch circle at 50% var(--gy),
+                oklch(0.93 0.14 320)  0vh,
+                oklch(0.70 0.28 340)  50vh,
+                oklch(0.38 0.22 295)  90vh,
+                oklch(0.15 0.08 290 / 0) 150vh
+            );
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <section><h1 class="headline">Vice<br>City</h1></section>
+        <section><h1 class="headline">Neon<br>Drift</h1></section>
+        <section><h1 class="headline">Sunset<br>Strip</h1></section>
+        <section><h1 class="headline">Heat<br>Wave</h1></section>
+    </main>
+
+    <script type="module">
+        import gsap from "https://esm.sh/gsap";
+        import { ScrollTrigger } from "https://esm.sh/gsap/ScrollTrigger/";
+        
+        gsap.registerPlugin(ScrollTrigger);
+
+        document.querySelectorAll(".headline").forEach((el) => {
+            gsap.fromTo(el,
+                { "--gy": "140vh" },
+                {
+                    "--gy": "-40vh",
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: el,
+                        start: "top bottom",
+                        end: "bottom top",
+                        scrub: 0.6,
+                    }
+                }
+            );
+        });
+    </script>
+</body>
+</html>
